@@ -61,11 +61,7 @@ public final class CrawlingTaskImpl extends CrawlingTask {
         PageParser.Result result = parserFactory.get(url).parse();
 
         for (Map.Entry<String, Integer> e : result.getWordCounts().entrySet()) {
-            if (counts.containsKey(e.getKey())) {
-                counts.put(e.getKey(), e.getValue() + counts.get(e.getKey()));
-            } else {
-                counts.put(e.getKey(), e.getValue());
-            }
+            counts.compute(e.getKey(), (k, v) -> e.getValue());
         }
 
         List<ForkJoinTask<Void>> tasks = new ArrayList<>();
@@ -79,7 +75,7 @@ public final class CrawlingTaskImpl extends CrawlingTask {
             }
         }
         catch(Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
         finally {
             pool.shutdown();

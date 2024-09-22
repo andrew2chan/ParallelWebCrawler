@@ -68,7 +68,7 @@ final class ParallelWebCrawler implements WebCrawler {
       pool.shutdown();
     }
 
-    if(!counts.isEmpty()) {
+    if(!counts.isEmpty()) { //done after threads are finished so no need for concurrent map
       return new CrawlResult.Builder()
               .setWordCounts(WordCounts.sort(counts, popularWordCount))
               .setUrlsVisited(visitedUrls.size())
