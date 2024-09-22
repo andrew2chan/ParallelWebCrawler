@@ -3,7 +3,7 @@
   "ignoredUrls": ["https://www\\.scrapethissite\\.com/.+"],
   "ignoredWords": ["^.{1,3}$"],
   "parallelism": 4,
-  "maxDepth": 2,
+  "maxDepth": 5,
   "timeoutSeconds": 5,
   "popularWordCount": 7,
   "profileOutputPath": "profileData.txt"

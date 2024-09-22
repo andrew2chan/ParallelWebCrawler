@@ -53,11 +53,13 @@ public final class CrawlingTaskImpl extends CrawlingTask {
             }
         }
 
-        if (visitedUrls.contains(url)) {
-            return;
+        synchronized(visitedUrls) { //In case multiple threads access the same link at the same time and visitedurls has not updated yet
+            if (visitedUrls.contains(url)) {
+                return;
+            }
+            visitedUrls.add(url);
         }
 
-        visitedUrls.add(url);
         PageParser.Result result = parserFactory.get(url).parse();
 
         for (Map.Entry<String, Integer> e : result.getWordCounts().entrySet()) {
@@ -71,14 +73,11 @@ public final class CrawlingTaskImpl extends CrawlingTask {
 
         try {
             for(ForkJoinTask<Void> v : tasks) {
-                v.get(); //wait for all threads to finish
+                v.get(); //wait for recursive threads to finish
             }
         }
         catch(Exception ex) {
             //ex.printStackTrace();
-        }
-        finally {
-            pool.shutdown();
         }
 
     }
