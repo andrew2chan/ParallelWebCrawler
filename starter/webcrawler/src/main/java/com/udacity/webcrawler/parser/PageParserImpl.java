@@ -64,6 +64,7 @@ final class PageParserImpl implements PageParser {
       parsedUri = new URI(uri);
     } catch (URISyntaxException e) {
       // Invalid link; ignore
+      e.printStackTrace();
       return new Result.Builder().build();
     }
 
@@ -114,6 +115,7 @@ final class PageParserImpl implements PageParser {
       public void tail(Node node, int depth) {
       }
     });
+
     return builder.build();
   }
 
@@ -125,7 +127,6 @@ final class PageParserImpl implements PageParser {
     if (!isLocalFile(uri)) {
       return Jsoup.parse(uri.toURL(), (int) timeout.toMillis());
     }
-
     // Unfortunately, Jsoup.parse() has a baseUri parameter that does not work with local
     // "file://" URIs. If we want the parser to support those URIs, which are very useful for
     // testing, the work-around is to pass in an empty baseUri and manually add the base back to
