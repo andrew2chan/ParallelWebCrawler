@@ -3,9 +3,7 @@ package com.udacity.webcrawler;
 import com.udacity.webcrawler.parser.PageParser;
 import com.udacity.webcrawler.parser.PageParserFactory;
 
-import javax.inject.Inject;
 import java.time.Clock;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;

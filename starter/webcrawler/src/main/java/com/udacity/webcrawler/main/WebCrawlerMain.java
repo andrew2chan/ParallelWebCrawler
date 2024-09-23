@@ -37,22 +37,21 @@ public final class WebCrawlerMain {
     CrawlResult result = crawler.crawl(config.getStartPages());
     CrawlResultWriter resultWriter = new CrawlResultWriter(result);
     // TODO: Write the crawl results to a JSON file (or System.out if the file name is empty)
-    if(!config.getResultPath().isEmpty()) {
-      Path resultWriterPath = Path.of(config.getResultPath());
-      resultWriter.write(resultWriterPath);
-    }
-    else {
-      Writer resultWriterOut = new BufferedWriter(new OutputStreamWriter(System.out));
-      resultWriter.write(resultWriterOut);
-    }
-    // TODO: Write the profile data to a text file (or System.out if the file name is empty)
-    if(!config.getProfileOutputPath().isEmpty()) {
-      Path profileOutputWriterPath = Path.of(config.getProfileOutputPath());
-      profiler.writeData(profileOutputWriterPath);
-    }
-    else {
-      Writer profileOutputWriterOut = new BufferedWriter(new OutputStreamWriter(System.out));
-      profiler.writeData(profileOutputWriterOut);
+
+    try(Writer out = new BufferedWriter(new OutputStreamWriter(System.out))) {
+      if (!config.getResultPath().isEmpty()) {
+        Path resultWriterPath = Path.of(config.getResultPath());
+        resultWriter.write(resultWriterPath);
+      } else {
+        resultWriter.write(out);
+      }
+      // TODO: Write the profile data to a text file (or System.out if the file name is empty)
+      if (!config.getProfileOutputPath().isEmpty()) {
+        Path profileOutputWriterPath = Path.of(config.getProfileOutputPath());
+        profiler.writeData(profileOutputWriterPath);
+      } else {
+        profiler.writeData(out);
+      }
     }
   }
 

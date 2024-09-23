@@ -1,9 +1,9 @@
 {
-  "startPages": ["https://fool.ca"],
+  "startPages": ["https://fool.ca", "https://www.scrapethissite.com", "https://www.udacity.com/"],
   "ignoredUrls": ["https://www\\.scrapethissite\\.com/.+"],
   "ignoredWords": ["^.{1,3}$"],
-  "parallelism": 4,
-  "maxDepth": 2,
-  "timeoutSeconds": 9999999,
-  "popularWordCount": 7
+  "parallelism": 10,
+  "maxDepth": 3,
+  "timeoutSeconds": 3,
+  "popularWordCount": 2
 }

@@ -4,14 +4,12 @@ import com.udacity.webcrawler.json.CrawlResult;
 import com.udacity.webcrawler.parser.PageParserFactory;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * A concrete implementation of {@link WebCrawler} that runs multiple threads on a
@@ -24,7 +22,7 @@ final class ParallelWebCrawler implements WebCrawler {
   private final int maxDepth; //added
   private final ForkJoinPool pool;
   private final List<Pattern> ignoredUrls; //added
-  private PageParserFactory parserFactory; //added
+  private final PageParserFactory parserFactory; //added
 
   @Inject
   ParallelWebCrawler(
@@ -49,7 +47,7 @@ final class ParallelWebCrawler implements WebCrawler {
     final Instant deadline = clock.instant().plus(timeout);
     final Map<String, Integer> counts = new ConcurrentHashMap<>();
     final Set<String> visitedUrls = new ConcurrentSkipListSet<>();
-    CrawlingTaskFactory crawlingTaskFactory = new CrawlingTaskFactory(deadline, counts, visitedUrls, clock, ignoredUrls, parserFactory);
+    CrawlingTaskFactory crawlingTaskFactory = new CrawlingTaskFactoryImpl(deadline, counts, visitedUrls, clock, ignoredUrls, parserFactory);
     List<ForkJoinTask<Void>> startingTasks = new ArrayList<>();
 
     for (String url : startingUrls) {

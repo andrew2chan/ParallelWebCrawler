@@ -10,8 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Clock;
+import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME;
@@ -24,6 +24,7 @@ final class ProfilerImpl implements Profiler {
   private final Clock clock;
   private final ProfilingState state = new ProfilingState();
   private final ZonedDateTime startTime;
+
 
   @Inject
   ProfilerImpl(Clock clock) {
