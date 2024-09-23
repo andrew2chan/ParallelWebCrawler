@@ -63,7 +63,7 @@ public final class CrawlingTaskImpl extends CrawlingTask {
         PageParser.Result result = parserFactory.get(url).parse();
 
         for (Map.Entry<String, Integer> e : result.getWordCounts().entrySet()) {
-            counts.compute(e.getKey(), (k, v) -> e.getValue());
+            counts.compute(e.getKey(), (k, v) -> (v == null) ? e.getValue() : v + e.getValue());
         }
 
         List<ForkJoinTask<Void>> tasks = new ArrayList<>();
